@@ -25,8 +25,16 @@
 .hero-content h2 {
   font-size: 2rem;
   font-weight: 500;
-  margin-bottom: 20px;
   color: var(--light-text);
+  overflow: hidden;
+  border-right: 0.15em solid var(--primary-color);
+  white-space: nowrap;
+  margin: 0 auto 20px 0;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  animation: 
+    typing 3.5s steps(30, end),
+    blink-caret 0.75s step-end infinite;
 }
 
 .cta-buttons {
@@ -78,6 +86,18 @@
   background-color: var(--primary-color);
   color: white;
   transform: translateY(-3px);
+}
+
+/* Typewriter animation */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 21.5ch }  /* Adjust this value to match the character count of "Web Developer & Designer" */
+}
+
+/* Blinking cursor animation */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--primary-color) }
 }
 
 /* Responsive styles */
