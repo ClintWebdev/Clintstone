@@ -65,7 +65,14 @@
         </div>
     </div>
     
-   
+    <!-- Social Media Toast Notification -->
+    <div id="socialUnavailableNotice" class="social-unavailable-notice">
+        <div class="notice-content">
+            <i class="fas fa-info-circle"></i>
+            <p>Not available yet. Use <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank">Facebook</a></p>
+        </div>
+        <button class="close-btn" aria-label="Close notification">&times;</button>
+    </div>
     
     <!-- Notification Toast -->
     <div class="notification-toast" id="notification">
@@ -75,8 +82,6 @@
         </div>
         <button class="notification-close" id="notificationClose">&times;</button>
     </div>
-    
-  
     
     <!-- JavaScript Files -->
     <script src="js/component-loader.js"></script>
@@ -140,13 +145,219 @@
                 document.getElementById('notification').classList.remove('show');
             });
             
-            // Current year for footer
+            // Current year for footer and initialize components
             document.addEventListener('componentLoaded', function(e) {
                 if (e.detail.id === 'footer-component') {
                     document.getElementById('currentYear').textContent = new Date().getFullYear();
                 }
+                
+                // Initialize social media links after home component OR contact component is loaded
+                if (e.detail.id === 'home-component' || e.detail.id === 'contact-component') {
+                    initSocialLinks();
+                    console.log(`Social media links initialized after ${e.detail.id} loaded`);
+                }
             });
+            
+            // Initialize social media notification system
+            function initSocialLinks() {
+                // Select all social links across the entire site, not just in home section
+                const allGithubLinks = document.querySelectorAll('.social-link.github-link');
+                const allInstagramLinks = document.querySelectorAll('.social-link.instagram-link');
+                const allLinkedinLinks = document.querySelectorAll('.social-link.linkedin-link');
+                const noticeElement = document.getElementById('socialUnavailableNotice');
+                const closeBtn = noticeElement.querySelector('.close-btn');
+                
+                let isNotificationVisible = false; // Flag to prevent spam clicking
+                let currentSocial = null; // Track which social is currently showing
+                
+                console.log('Social links found:', {
+                    github: allGithubLinks.length,
+                    instagram: allInstagramLinks.length,
+                    linkedin: allLinkedinLinks.length,
+                    notice: !!noticeElement
+                });
+                
+                // Function to hide notification
+                function hideNotification() {
+                    noticeElement.classList.add('hidden');
+                    setTimeout(() => {
+                        noticeElement.classList.remove('visible', 'hidden');
+                        isNotificationVisible = false;
+                        currentSocial = null;
+                    }, 500);
+                }
+                
+                // Add close button functionality
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function() {
+                        hideNotification();
+                    });
+                }
+                
+                // Function to display unavailable social profile message
+                function showUnavailableNotice(socialName) {
+                    // If the same social is clicked while visible, ignore
+                    if (isNotificationVisible && currentSocial === socialName) {
+                        console.log('Same notification already visible, ignoring click');
+                        return;
+                    }
+                    
+                    console.log('Showing notification for:', socialName);
+                    
+                    if (!noticeElement) {
+                        console.error('Notice element not found');
+                        return;
+                    }
+                    
+                    // If a different notification is visible, update it instead of ignoring
+                    if (isNotificationVisible) {
+                        // Just update the content without hiding first
+                        const noticeText = noticeElement.querySelector('.notice-content p');
+                        noticeText.innerHTML = `${socialName} profile is not available yet. Please connect with me on <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank">Facebook</a>.`;
+                        currentSocial = socialName;
+                        return;
+                    }
+                    
+                    // No notification visible, show new one
+                    isNotificationVisible = true;
+                    currentSocial = socialName;
+                    
+                    // Reset any existing animations
+                    noticeElement.classList.remove('visible', 'hidden');
+                    
+                    // Force browser reflow
+                    void noticeElement.offsetWidth;
+                    
+                    // Update the message with the social media name
+                    const noticeText = noticeElement.querySelector('.notice-content p');
+                    noticeText.innerHTML = `${socialName} profile is not available yet. Please connect with me on <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank">Facebook</a>.`;
+                    
+                    // Show notification
+                    noticeElement.classList.add('visible');
+                    
+                    // Set timer to hide notification
+                    setTimeout(() => {
+                        hideNotification();
+                    }, 6000);
+                }
+                
+                // Add click event listeners to all GitHub links
+                allGithubLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showUnavailableNotice('GitHub');
+                    });
+                });
+                
+                // Add click event listeners to all Instagram links
+                allInstagramLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showUnavailableNotice('Instagram');
+                    });
+                });
+                
+                // Add click event listeners to all LinkedIn links
+                allLinkedinLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showUnavailableNotice('LinkedIn');
+                    });
+                });
+            }
         });
     </script>
+    
+    <style>
+        /* Social Media Notification Styles - Landscape compact version */
+        .social-unavailable-notice {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #5e17eb;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            max-width: 320px;
+            width: auto;
+            border: 2px solid #7d42f5;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+        
+        .social-unavailable-notice.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .social-unavailable-notice.hidden {
+            opacity: 0;
+        }
+        
+        .notice-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .notice-content i {
+            font-size: 1.2rem;
+            color: white;
+            min-width: 16px;
+        }
+        
+        .notice-content p {
+            margin: 0;
+            font-weight: 500;
+            color: white;
+            font-size: 13px;
+            padding-right: 10px; /* Make room for close button */
+        }
+        
+        .notice-content a {
+            color: #ffffff;
+            text-decoration: underline;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .notice-content a:hover {
+            text-decoration: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+        
+        /* Add a close button to the notification */
+        .social-unavailable-notice .close-btn {
+            position: absolute;
+            top: 50%;
+            right: 6px;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            padding: 0;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hide href on hover for # links */
+        .social-link[href="#"] {
+            position: relative;
+        }
+    </style>
 </body>
 </html>
