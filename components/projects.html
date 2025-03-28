@@ -1,0 +1,159 @@
+<!-- Projects Section -->
+<section id="projects" class="projects">
+    <div class="container">
+        <h2 class="section-title">My Projects</h2>
+        <div class="project-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web Development</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+            <button class="filter-btn" data-filter="app">App Development</button>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-item" data-category="web">
+                <div class="project-img">
+                    <img src="assets/images/goaltrack.jpg" alt="GoalTrack App">
+                </div>
+                <div class="project-info">
+                    <h3>GoalTrack</h3>
+                    <p>Web application for creating goals with email reminders to help users stay on track and achieve their targets.</p>
+                    <div class="project-tags">
+                        <span>PHP</span>
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>MySQL</span>
+                        <span>PHPMailer</span>
+                    </div>
+                    <div class="project-links">
+                        <a target="_blank" href="http://goaltrack.free.nf/" class="btn small-btn primary-btn">Visit Website</a>
+                        <a href="https://github.com/ClintWebdev/goaltrack" class="btn small-btn secondary-btn">View Code</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-item" data-category="design">
+                <div class="project-img">
+                    <img src="assets/images/design.jpg" alt="GoalTrack UI Design">
+                </div>
+                <div class="project-info">
+                    <h3>GoalTrack UI Design</h3>
+                    <p>Mobile-first UI design for the GoalTrack application, created to provide an intuitive and engaging user experience for goal setting and tracking.</p>
+                    <div class="project-tags">
+                        <span>Figma</span>
+                        <span>UI/UX</span>
+                        <span>Mobile Design</span>
+                        <span>Prototyping</span>
+                    </div>
+                    <div class="project-links">
+                        <a target="_blank" href="https://www.figma.com/proto/28003aQBTHeW5FIn9w6EkN/mobile-design?page-id=0%3A1&node-id=1-2&node-type=frame&viewport=-2548%2C-928%2C0.55&t=1Xnd2ITZkujhPI0t-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A2" class="btn small-btn primary-btn">View Design</a>
+                    </div>
+                </div>
+            </div>
+            
+           
+            
+            <div class="project-item" data-category="web">
+                <div class="project-img">
+                    <img src="assets/images/weatherApp.jpg" alt="Weather App">
+                </div>
+                <div class="project-info">
+                    <h3>Weather App</h3>
+                    <p>A simple weather application that displays real-time weather information based on city input using OpenWeatherAPI.</p>
+                    <div class="project-tags">
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                        <span>API</span>
+                    </div>
+                    <div class="project-links">
+                        <a target="_blank" href="https://clintwebdev.github.io/WeatherApp/" class="btn small-btn primary-btn">Visit Website</a>
+                        <a target="_blank" href="https://github.com/ClintWebdev/WeatherApp" class="btn small-btn secondary-btn">View Code</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-item" data-category="web">
+                <div class="project-img">
+                    <img src="assets/images/fixelFinder.jpg" alt="PixelFinder App">
+                </div>
+                <div class="project-info">
+                    <h3>PixelFinder</h3>
+                    <p>An image search application where users can search and download high-quality images to use for their projects. Built with Unsplash API.</p>
+                    <div class="project-tags">
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                        <span>API</span>
+                    </div>
+                    <div class="project-links">
+                        <a target="_blank" href="https://clintwebdev.github.io/image-Searching-App/" class="btn small-btn primary-btn">Visit Website</a>
+                        <a target="_blank" href="https://github.com/ClintWebdev/image-Searching-App" class="btn small-btn secondary-btn">View Code</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- App Development Coming Soon -->
+            <div class="project-item" data-category="app">
+                <div class="project-img coming-soon-img">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="project-info">
+                    <h3>App Projects Coming Soon</h3>
+                    <p>I'm currently working on exciting new mobile application projects that will be uploaded here soon. Check back for updates!</p>
+                    <div class="project-tags">
+                        <span>Flutter</span>
+                        <span>Android</span>
+                        <span>iOS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="project-more">
+            <a href="#" class="btn primary-btn" id="seeMoreProjects">See More Projects</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .coming-soon-img {
+        background-color: #f1f5ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 200px;
+    }
+    
+    .coming-soon-img i {
+        font-size: 80px;
+        color: var(--primary-color, #4a6bfd);
+        opacity: 0.6;
+    }
+</style>
+
+<script>
+    // Load the project filters script
+    (function() {
+        // Check if script already loaded
+        if (!document.getElementById('project-filters-script')) {
+            // Create script element
+            const script = document.createElement('script');
+            script.id = 'project-filters-script';
+            script.src = 'js/project-filters.js';
+            script.async = true;
+            
+            // Add error handling
+            script.onerror = function() {
+                console.error('Failed to load project filters script');
+            };
+            
+            // Append to document
+            document.body.appendChild(script);
+        } else {
+            // If script already exists, manually reinitialize
+            console.log('Project filters script already exists, reinitializing');
+            if (typeof window.initProjectFilters === 'function') {
+                setTimeout(window.initProjectFilters, 50);
+            }
+        }
+    })();
+</script>

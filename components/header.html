@@ -1,0 +1,89 @@
+<!-- Header Section -->
+<header>
+    <nav class="portfolio-navbar">
+        <div class="portfolio-logo">Clintstone</div>
+        <ul class="portfolio-nav-links">
+            <!-- Removed indicator element -->
+            <li><a href="#home" data-section="home">Home</a></li>
+            <li><a href="#about" data-section="about">About</a></li>
+            <li><a href="#skills" data-section="skills">Skills</a></li>
+            <li><a href="#projects" data-section="projects">Projects</a></li>
+            <li><a href="#contact" data-section="contact">Contact</a></li>
+        </ul>
+        <button id="theme-toggle" class="portfolio-theme-toggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon portfolio-icon-moon portfolio-icon-visible"></i>
+            <i class="fas fa-sun portfolio-icon-sun portfolio-icon-hidden"></i>
+        </button>
+        <div class="portfolio-burger">
+            <i class="fas fa-bars portfolio-menu-icon"></i>
+            <i class="fas fa-times portfolio-close-icon"></i>
+        </div>
+    </nav>
+</header>
+
+<!-- Navigation backdrop for mobile -->
+<div id="navBackdrop" class="portfolio-nav-backdrop"></div>
+
+<script>
+    // Mobile Navigation Drawer
+    document.addEventListener('DOMContentLoaded', function() {
+        const burger = document.querySelector('.portfolio-burger');
+        const nav = document.querySelector('.portfolio-nav-links');
+        const navLinks = document.querySelectorAll('.portfolio-nav-links li');
+        const backdrop = document.getElementById('navBackdrop');
+        
+        // Toggle Nav Function
+        function toggleNav() {
+            nav.classList.toggle('portfolio-nav-active');
+            backdrop.classList.toggle('portfolio-active');
+            burger.classList.toggle('portfolio-toggle');
+            
+            if (nav.classList.contains('portfolio-nav-active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+            
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
+                } else {
+                    link.style.animation = `portfolioNavLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                }
+            });
+        }
+        
+        burger.addEventListener('click', toggleNav);
+        backdrop.addEventListener('click', toggleNav);
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (nav.classList.contains('portfolio-nav-active')) {
+                    toggleNav();
+                }
+            });
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && nav.classList.contains('portfolio-nav-active')) {
+                toggleNav();
+            }
+        });
+        
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 767 && nav.classList.contains('portfolio-nav-active')) {
+                toggleNav();
+            }
+        });
+    });
+</script>
+
+<!-- Add this to your main CSS or :root declaration -->
+<style>
+    :root {
+        --primary-color-rgb: 0, 120, 212; /* Set this to match your primary color */
+    }
+    [data-theme="dark"] {
+        --primary-color-rgb: 64, 156, 255; /* Adjust for dark mode if necessary */
+    }
+</style>

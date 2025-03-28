@@ -1,0 +1,392 @@
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>ubuanclintstone123@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>0968 668 3916</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Location</h3>
+                            <p>San Miguel, Surigao del Sur, Philippines</p>
+                        </div>
+                    </div>
+                    <div class="social-icons">
+                        <button type="button" class="social-btn github-btn"><i class="fab fa-github"></i></button>
+                        <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <button type="button" class="social-btn instagram-btn"><i class="fab fa-instagram"></i></button>
+                        <button type="button" class="social-btn linkedin-btn"><i class="fab fa-linkedin-in"></i></button>
+                    </div>
+                </div>
+            </div>
+            <form id="contactForm" class="contact-form" action="https://formspree.io/f/xqaplnka" method="POST" onsubmit="return handleSubmit(event)">
+                <div class="form-header">
+                    <h3>Send Message</h3>
+                    <p>Feel free to reach out for any inquiries or collaboration opportunities.</p>
+                </div>
+                <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-user"></i></span>
+                    <input type="text" id="name" name="name" placeholder=" " required>
+                    <label for="name" class="floating-label">Full Name</label>
+                    <div class="input-validation"></div>
+                </div>
+                <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email" class="floating-label">Email Address</label>
+                    <div class="input-validation"></div>
+                </div>
+                <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-heading"></i></span>
+                    <input type="text" id="subject" name="subject" placeholder=" " required>
+                    <label for="subject" class="floating-label">Subject</label>
+                    <div class="input-validation"></div>
+                </div>
+                <div class="input-group">
+                    <span class="input-icon textarea-icon"><i class="fas fa-comment-alt"></i></span>
+                    <textarea id="message" name="message" placeholder=" " required></textarea>
+                    <label for="message" class="floating-label">Message</label>
+                    <div class="input-validation"></div>
+                </div>
+                <button type="submit" class="btn primary-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+                <div id="formStatus" class="form-status">
+                    <p class="success-message"><i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully.</p>
+                    <p class="error-message"><i class="fas fa-exclamation-circle"></i> Oops! There was a problem sending your message.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Message Box -->
+    <div id="messageBox" class="message-box">
+        <div class="message-content">
+            <i class="fas fa-check-circle"></i>
+            <div class="message-text">
+                <h3>Thank You!</h3>
+                <p>Your message has been sent successfully.</p>
+                <p class="response-note">I'll review your message and get back to you as soon as possible.</p>
+            </div>
+            <button onclick="closeMessageBox()" class="btn primary-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Social Media Toast Notification -->
+    <div id="socialUnavailableNotice" class="social-unavailable-notice">
+        <div class="notice-content">
+            <i class="fas fa-info-circle"></i>
+            <p>This social profile is not available yet. Please connect with me on <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank">Facebook</a>.</p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .message-box {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: all 0.3s ease;
+    }
+    .message-box.show {
+        display: flex;
+        animation: fadeIn 0.3s forwards;
+    }
+    .message-content {
+        background: white;
+        padding: 1.8rem;
+        border-radius: 12px;
+        text-align: center;
+        max-width: 380px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transform: translateY(20px);
+        opacity: 0;
+        animation: slideUp 0.4s forwards 0.1s;
+        border-top: 4px solid #28a745;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .message-text {
+        margin-bottom: 1.2rem;
+    }
+    .message-content i {
+        font-size: 3.2rem;
+        color: #28a745;
+        margin-bottom: 1rem;
+        display: block;
+        text-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
+    }
+    .message-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+    .message-content p {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #555;
+        line-height: 1.4;
+    }
+    .message-content .response-note {
+        font-size: 0.9rem;
+        color: #666;
+        font-style: italic;
+        margin-bottom: 0;
+        padding: 0 0.5rem;
+    }
+    .message-content .btn {
+        padding: 0.6rem 1.8rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        margin-top: 0.5rem;
+    }
+    
+    /* Dark Mode Styles */
+    .dark-mode .message-content {
+        background: #2d2d2d;
+        border-top-color: #4caf50;
+        color: #eee;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .dark-mode .message-content h3 {
+        color: #fff;
+    }
+    .dark-mode .message-content p {
+        color: #ddd;
+    }
+    .dark-mode .message-content .response-note {
+        color: #bbb;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+        from { 
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to { 
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    /* Media query for small screens */
+    @media screen and (max-width: 480px) {
+        .message-content {
+            padding: 2rem 1.5rem;
+        }
+        .message-content i {
+            font-size: 3.5rem;
+        }
+        .message-content h3 {
+            font-size: 1.5rem;
+        }
+    }
+    
+    /* Social Unavailable Notice - Renamed from social-toast */
+    .social-unavailable-notice {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #333;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 6px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 9999;
+        display: none;
+        max-width: 300px;
+        transition: all 0.3s ease;
+        border-left: 4px solid #3b5998;
+    }
+    
+    .social-unavailable-notice.visible {
+        display: block;
+        animation: slideInRight 0.3s forwards;
+    }
+    
+    .social-unavailable-notice.hidden {
+        animation: fadeOut 0.5s forwards;
+    }
+    
+    .notice-content {
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .notice-content i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+        color: #3b5998;
+    }
+    
+    .notice-content p {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    
+    .notice-content a {
+        color: #4e69a2;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    
+    .notice-content a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Dark mode styles for notice */
+    .dark-mode .social-unavailable-notice {
+        background: #222;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    /* Toast animations - Updated */
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(10px);
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .social-unavailable-notice {
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            max-width: none;
+        }
+    }
+
+    /* Social button styles */
+    .social-icons .social-btn {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        padding: 0.5rem;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+    
+    .social-icons .social-btn:hover {
+        transform: translateY(-3px);
+    }
+    
+    .social-icons .social-btn:focus {
+        outline: none;
+    }
+    
+    /* Keep the same spacing and appearance as the original links */
+    .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Social media notification system initialized');
+        
+        // Get all social media buttons (except Facebook)
+        const githubBtn = document.querySelector('.social-icons .github-btn');
+        const instagramBtn = document.querySelector('.social-icons .instagram-btn');
+        const linkedinBtn = document.querySelector('.social-icons .linkedin-btn');
+        const noticeElement = document.getElementById('socialUnavailableNotice');
+        
+        // Function to display unavailable social profile message
+        function showUnavailableNotice(socialName) {
+            if (!noticeElement) {
+                console.warn('Notice element not found');
+                return;
+            }
+            
+            // Reset any existing animations
+            noticeElement.classList.remove('visible', 'hidden');
+            
+            // Force browser reflow
+            void noticeElement.offsetWidth;
+            
+            // Update the message with the social media name
+            const noticeText = noticeElement.querySelector('.notice-content p');
+            noticeText.innerHTML = `${socialName} profile is not available yet. Please connect with me on <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank">Facebook</a>.`;
+            
+            // Show notification
+            noticeElement.classList.add('visible');
+            
+            // Set timer to hide notification
+            setTimeout(() => {
+                noticeElement.classList.add('hidden');
+                setTimeout(() => {
+                    noticeElement.classList.remove('visible', 'hidden');
+                }, 500);
+            }, 6000);
+        }
+        
+        // Add click event listeners to buttons
+        if (githubBtn) {
+            githubBtn.addEventListener('click', () => showUnavailableNotice('GitHub'));
+        }
+        
+        if (instagramBtn) {
+            instagramBtn.addEventListener('click', () => showUnavailableNotice('Instagram'));
+        }
+        
+        if (linkedinBtn) {
+            linkedinBtn.addEventListener('click', () => showUnavailableNotice('LinkedIn'));
+        }
+    });
+</script>
+

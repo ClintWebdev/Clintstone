@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clintstone Ubuan - Web Developer & Designer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="css/core/global.css">
+    
+    <!-- Component CSS -->
+    <link rel="stylesheet" href="css/components/header.css">
+    <link rel="stylesheet" href="css/components/home.css">
+    <link rel="stylesheet" href="css/components/about.css">
+    <link rel="stylesheet" href="css/components/skills.css">
+    <link rel="stylesheet" href="css/components/projects.css">
+    <link rel="stylesheet" href="css/components/contact.css">
+    <link rel="stylesheet" href="css/components/footer.css">
+    
+    
+</head>
+<body>
+    <div id="navBackdrop" class="nav-backdrop"></div>
+    
+    <!-- Include header component -->
+    <div id="header-component"></div>
+    
+    <main>
+        <!-- Include home component -->
+        <div id="home-component"></div>
+        
+        <!-- Include about component -->
+        <div id="about-component"></div>
+        
+        <!-- Include skills component -->
+        <div id="skills-component"></div>
+        
+        <!-- Include projects component -->
+        <div id="projects-component"></div>
+        
+        <!-- Include contact component -->
+        <div id="contact-component"></div>
+    </main>
+    
+    <!-- Include footer component -->
+    <div id="footer-component"></div>
+    
+    <!-- Thank you overlay -->
+    <div id="thankYouOverlay" class="thank-you-overlay">
+        <div class="thank-you-message">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3>Thank You!</h3>
+            <p>Your message has been sent successfully. I'll get back to you soon!</p>
+            <button class="close-btn" id="closeThankYou">Close</button>
+        </div>
+    </div>
+    
+   
+    
+    <!-- Notification Toast -->
+    <div class="notification-toast" id="notification">
+        <div class="notification-content">
+            <span class="notification-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="notification-message">Message here</span>
+        </div>
+        <button class="notification-close" id="notificationClose">&times;</button>
+    </div>
+    
+  
+    
+    <!-- JavaScript Files -->
+    <script src="js/component-loader.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/project-filters.js"></script>
+    <script>
+        // Load all components
+        document.addEventListener('DOMContentLoaded', function() {
+            const components = [
+                { id: 'header-component', url: 'components/header.html' },
+                { id: 'home-component', url: 'components/home.html' },
+                { id: 'about-component', url: 'components/about.html' },
+                { id: 'skills-component', url: 'components/skills.html' },
+                { id: 'projects-component', url: 'components/projects.html' },
+                { id: 'contact-component', url: 'components/contact.html' },
+                { id: 'footer-component', url: 'components/footer.html' }
+            ];
+            
+            // Load all components
+            components.forEach(function(component) {
+                loadComponent(component.id, component.url);
+            });
+            
+            // Function to load components
+            function loadComponent(id, url) {
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                        // Dispatch event when component is loaded
+                        document.dispatchEvent(new CustomEvent('componentLoaded', {
+                            detail: { id: id }
+                        }));
+                    })
+                    .catch(error => console.error('Error loading component:', error));
+            }
+            
+            // Close thank you overlay
+            document.body.addEventListener('click', function(event) {
+                if (event.target.id === 'closeThankYou') {
+                    document.getElementById('thankYouOverlay').style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Show notification function
+            window.showNotification = function(message, duration = 3000) {
+                const notification = document.getElementById('notification');
+                notification.querySelector('.notification-message').textContent = message;
+                notification.classList.add('show');
+                
+                setTimeout(function() {
+                    notification.classList.remove('show');
+                }, duration);
+            };
+            
+            // Close notification on click
+            document.getElementById('notificationClose').addEventListener('click', function() {
+                document.getElementById('notification').classList.remove('show');
+            });
+            
+            // Current year for footer
+            document.addEventListener('componentLoaded', function(e) {
+                if (e.detail.id === 'footer-component') {
+                    document.getElementById('currentYear').textContent = new Date().getFullYear();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
