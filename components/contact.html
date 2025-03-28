@@ -27,10 +27,10 @@
                         </div>
                     </div>
                     <div class="social-icons">
-                        <button type="button" class="social-btn github-btn"><i class="fab fa-github"></i></button>
-                        <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <button type="button" class="social-btn instagram-btn"><i class="fab fa-instagram"></i></button>
-                        <button type="button" class="social-btn linkedin-btn"><i class="fab fa-linkedin-in"></i></button>
+                        <a href="#" class="social-link github-link" aria-label="GitHub (Coming Soon)"><i class="fab fa-github"></i></a>
+                        <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link instagram-link" aria-label="Instagram (Coming Soon)"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link linkedin-link" aria-label="LinkedIn (Coming Soon)"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
@@ -84,14 +84,6 @@
                 <p class="response-note">I'll review your message and get back to you as soon as possible.</p>
             </div>
             <button onclick="closeMessageBox()" class="btn primary-btn">Close</button>
-        </div>
-    </div>
-
-    <!-- Social Media Toast Notification -->
-    <div id="socialUnavailableNotice" class="social-unavailable-notice">
-        <div class="notice-content">
-            <i class="fas fa-info-circle"></i>
-            <p>This social profile is not available yet. Please connect with me on <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank">Facebook</a>.</p>
         </div>
     </div>
 </section>
@@ -215,178 +207,33 @@
         }
     }
     
-    /* Social Unavailable Notice - Renamed from social-toast */
-    .social-unavailable-notice {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: #333;
-        color: white;
-        padding: 15px 20px;
-        border-radius: 6px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        z-index: 9999;
-        display: none;
-        max-width: 300px;
-        transition: all 0.3s ease;
-        border-left: 4px solid #3b5998;
-    }
-    
-    .social-unavailable-notice.visible {
-        display: block;
-        animation: slideInRight 0.3s forwards;
-    }
-    
-    .social-unavailable-notice.hidden {
-        animation: fadeOut 0.5s forwards;
-    }
-    
-    .notice-content {
-        display: flex;
-        align-items: flex-start;
-    }
-    
-    .notice-content i {
-        margin-right: 10px;
-        font-size: 1.2rem;
-        color: #3b5998;
-    }
-    
-    .notice-content p {
-        margin: 0;
-        font-size: 0.9rem;
-        line-height: 1.4;
-    }
-    
-    .notice-content a {
-        color: #4e69a2;
-        font-weight: bold;
-        text-decoration: none;
-    }
-    
-    .notice-content a:hover {
-        text-decoration: underline;
-    }
-    
-    /* Dark mode styles for notice */
-    .dark-mode .social-unavailable-notice {
-        background: #222;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    
-    /* Toast animations - Updated */
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes fadeOut {
-        from {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateX(10px);
-        }
-    }
-    
-    @media screen and (max-width: 480px) {
-        .social-unavailable-notice {
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            max-width: none;
-        }
-    }
-
-    /* Social button styles */
-    .social-icons .social-btn {
-        background: none;
-        border: none;
-        color: inherit;
-        cursor: pointer;
-        padding: 0.5rem;
-        font-size: 1rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s ease, color 0.3s ease;
-    }
-    
-    .social-icons .social-btn:hover {
-        transform: translateY(-3px);
-    }
-    
-    .social-icons .social-btn:focus {
-        outline: none;
-    }
-    
-    /* Keep the same spacing and appearance as the original links */
-    .social-icons {
+    /* Social icons styles for contact section */
+    .contact-card .social-icons {
         display: flex;
         gap: 1rem;
         margin-top: 1.5rem;
+        justify-content: center;
+    }
+    
+    .contact-card .social-icons .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--dark-bg);
+        margin-right: 10px;
+        color: inherit;
+        text-decoration: none;
+        transition: var(--transition);
+        cursor: pointer;
+    }
+    
+    .contact-card .social-icons .social-link:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-3px);
     }
 </style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Social media notification system initialized');
-        
-        // Get all social media buttons (except Facebook)
-        const githubBtn = document.querySelector('.social-icons .github-btn');
-        const instagramBtn = document.querySelector('.social-icons .instagram-btn');
-        const linkedinBtn = document.querySelector('.social-icons .linkedin-btn');
-        const noticeElement = document.getElementById('socialUnavailableNotice');
-        
-        // Function to display unavailable social profile message
-        function showUnavailableNotice(socialName) {
-            if (!noticeElement) {
-                console.warn('Notice element not found');
-                return;
-            }
-            
-            // Reset any existing animations
-            noticeElement.classList.remove('visible', 'hidden');
-            
-            // Force browser reflow
-            void noticeElement.offsetWidth;
-            
-            // Update the message with the social media name
-            const noticeText = noticeElement.querySelector('.notice-content p');
-            noticeText.innerHTML = `${socialName} profile is not available yet. Please connect with me on <a href="https://www.facebook.com/clintstone.ubuan22" target="_blank">Facebook</a>.`;
-            
-            // Show notification
-            noticeElement.classList.add('visible');
-            
-            // Set timer to hide notification
-            setTimeout(() => {
-                noticeElement.classList.add('hidden');
-                setTimeout(() => {
-                    noticeElement.classList.remove('visible', 'hidden');
-                }, 500);
-            }, 6000);
-        }
-        
-        // Add click event listeners to buttons
-        if (githubBtn) {
-            githubBtn.addEventListener('click', () => showUnavailableNotice('GitHub'));
-        }
-        
-        if (instagramBtn) {
-            instagramBtn.addEventListener('click', () => showUnavailableNotice('Instagram'));
-        }
-        
-        if (linkedinBtn) {
-            linkedinBtn.addEventListener('click', () => showUnavailableNotice('LinkedIn'));
-        }
-    });
-</script>
 
