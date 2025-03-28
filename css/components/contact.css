@@ -573,18 +573,17 @@
     margin-bottom: 15px;
   }
   
-  .input-icon {
-    top: 40px;
-  }
+
   
   .floating-label {
-    left: 15px;
-    top: 15px;
+   
+    display:flex;
+
   }
   
   .input-group input, 
   .input-group textarea {
-    padding: 15px;
+   padding: 15px 2em;
   }
   
   .input-group input:focus ~ .floating-label,
