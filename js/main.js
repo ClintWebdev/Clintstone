@@ -47,64 +47,8 @@ function initProjectFilters() {
     });
 }
 
-// Smooth scrolling for anchor links
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 70, // Adjust for header height
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
 
-// Active navigation on scroll with indicator - modified to remove indicator
-function updateActiveNavOnScroll() {
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.portfolio-nav-links a');
-    
-    window.addEventListener('scroll', () => {
-        let current = '';
-        const scrollY = window.scrollY;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 150;  // Increased offset for better detection
-            const sectionHeight = section.clientHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                current = sectionId;
-            }
-        });
-        
-        navLinks.forEach(link => {
-            // Remove active class
-            link.classList.remove('portfolio-active');
-            
-            const href = link.getAttribute('href').substring(1); // Remove the # from href
-            
-            if (href === current) {
-                link.classList.add('portfolio-active');
-            }
-        });
-    });
-    
-    // Update active link on click
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.forEach(l => l.classList.remove('portfolio-active'));
-            link.classList.add('portfolio-active');
-        });
-    });
-}
+
 
 // Form submission handler
 async function handleSubmit(event) {
