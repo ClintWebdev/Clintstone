@@ -69,6 +69,53 @@
   transform: rotate(0) scale(1);
 }
 
+/* New Custom Hamburger Button */
+.portfolio-hamburger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  z-index: 101;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.portfolio-hamburger:hover {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+.portfolio-hamburger-line {
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-color);
+  display: block;
+  margin: 3px auto;
+  transition: all 0.3s ease-in-out;
+  border-radius: 2px;
+}
+
+/* Hamburger animation when active */
+.portfolio-hamburger.portfolio-active .portfolio-hamburger-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+  background-color: var(--primary-color);
+}
+
+.portfolio-hamburger.portfolio-active .portfolio-hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.portfolio-hamburger.portfolio-active .portfolio-hamburger-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+  background-color: var(--primary-color);
+}
+
 .portfolio-navbar.portfolio-scrolled {
   padding: 12px 40px;
 }
@@ -101,14 +148,25 @@
   left: 0;
 }
 
+/* Base desktop styles for nav links */
 .portfolio-nav-links {
   display: flex;
   list-style: none;
-  position: relative; /* Added for positioning the indicator */
+  position: relative;
+  margin: 0;
+  padding: 0;
+  flex-direction: row;
+  align-items: center;
 }
 
 .portfolio-nav-links li {
   margin-left: 32px;
+  /* Reset mobile specific styles for desktop */
+  width: auto;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  border-radius: 0;
 }
 
 .portfolio-nav-links a {
@@ -117,7 +175,7 @@
   color: var(--text-color);
   transition: color 0.3s ease, transform 0.3s ease;
   padding: 6px 2px;
-  /* Removed margin-bottom for indicator */
+  display: inline-block;
 }
 
 .portfolio-nav-links a:hover {
@@ -194,7 +252,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 99;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
@@ -204,16 +262,133 @@
   opacity: 1;
 }
 
-/* Navigation fade animation */
+/* Improve Navigation fade animation */
 @keyframes portfolioNavLinkFade {
   from {
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateX(20px);
   }
   to {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* New Flaticon Menu Button Styles */
+.portfolio-menu-button {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  z-index: 101;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+.portfolio-menu-button:hover {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+.portfolio-menu-button img {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+}
+
+.portfolio-menu-button .close-icon {
+  display: none;
+}
+
+.portfolio-menu-button.portfolio-active .menu-icon {
+  display: none;
+}
+
+.portfolio-menu-button.portfolio-active .close-icon {
+  display: block;
+  animation: portfolioRotateIn 0.3s ease forwards;
+}
+
+/* Custom Minimal Menu Button Styles */
+.portfolio-menu-button {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  z-index: 101;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.portfolio-menu-button:hover {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+/* Menu button lines */
+.menu-line {
+  width: 22px;
+  height: 2px;
+  background-color: var(--text-color);
+  display: block;
+  margin: 2px 0;
+  transition: all 0.3s ease;
+  border-radius: 1px;
+  position: relative;
+  transform-origin: center;
+}
+
+/* Animation for menu button when active */
+.portfolio-menu-button.portfolio-active .menu-line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+  background-color: var(--primary-color);
+  width: 22px;
+}
+
+.portfolio-menu-button.portfolio-active .menu-line:nth-child(2) {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.portfolio-menu-button.portfolio-active .menu-line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+  background-color: var(--primary-color);
+  width: 22px;
+}
+
+/* Menu button variations */
+[data-theme="dark"] .menu-line {
+  background-color: var(--text-color);
+}
+
+[data-theme="dark"] .portfolio-menu-button.portfolio-active .menu-line:nth-child(1),
+[data-theme="dark"] .portfolio-menu-button.portfolio-active .menu-line:nth-child(3) {
+  background-color: var(--primary-color);
+}
+
+/* Remove old menu button image styles */
+.portfolio-menu-button img {
+  display: none;
+}
+
+/* Hide the mobile-only elements on desktop */
+.portfolio-nav-links-wrapper {
+  display: none;
+}
+
+.menu-footer-decoration {
+  display: none;
 }
 
 /* Media queries for responsive navbar */
@@ -231,55 +406,177 @@
   }
   
   .portfolio-theme-toggle {
-    order: 3;
+    order: 1; /* Swap to left side */
     width: 40px;
     height: 40px;
-    margin-right: 10px;
+    margin-right: 0;
+    margin-left: 10px;
   }
   
-  .portfolio-burger {
+  /* Style the hamburger menu for mobile */
+  .portfolio-hamburger {
     display: flex !important;
     order: 1;
   }
   
+  /* Mobile navigation styles */
   .portfolio-nav-links {
-    position: fixed;
-    right: -100%;
-    top: 0;
-    width: 75%;
+   
+    width: 50%; /* Reduce width from 75% to 50% */
     height: 100vh;
     background: var(--background-color);
-    flex-direction: column;
+    flex-direction: column; /* Changed to column for mobile */
     align-items: center;
-    justify-content: center;
-    padding: 80px 30px 30px;
-    transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    justify-content: flex-start;
+    padding: 120px 30px 40px; /* Increased top padding from 80px to 120px */
+    transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
     z-index: 100;
     overflow-y: auto;
+    will-change: transform; /* Performance optimization */
+    transform: translateX(100%);
+    /* Add explicit light mode styling to ensure visibility */
+    background-color: #ffffff;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    /* Add menu header and footer margins */
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  /* Add a nice header to the mobile menu */
+  .portfolio-nav-links::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1) 0%, rgba(var(--primary-color-rgb), 0.05) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.1);
+  }
+  
+  /* Add a subtle pattern overlay */
+  .portfolio-nav-links::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill='%23000000' fill-opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: -1;
+    pointer-events: none;
   }
   
   [data-theme="dark"] .portfolio-nav-links {
     background-color: rgba(22, 22, 24, 0.98);
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+    border-left: none;
+  }
+  
+  [data-theme="dark"] .portfolio-nav-links::before {
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.2) 0%, rgba(var(--primary-color-rgb), 0.05) 100%);
+    border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.15);
+  }
+  
+  /* Container for menu items */
+  .portfolio-nav-links-container {
+    width: 100%;
+    padding: 80px 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .portfolio-nav-links.portfolio-nav-active {
+    transform: translateX(0); /* Use transform instead of right for smoother animation */
     right: 0;
   }
   
   .portfolio-nav-links li {
-    margin: 15px 0;
-    width: 100%;
+    margin: 10px 0; /* Increased vertical margin from 8px to 10px for better spacing */
+    width: 85%;
     opacity: 0;
-    transform: translateX(50px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateX(20px); /* Reduce the distance for smoother animation */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border-radius: 10px;
   }
   
   .portfolio-nav-links.portfolio-nav-active li {
     opacity: 1;
     transform: translateX(0);
     transition-delay: calc(0.05s * var(--i));
+  }
+  
+  .portfolio-nav-links li a {
+    display: block;
+    font-size: 1.1rem;
+    padding: 14px 20px;
+    width: 100%;
+    text-align: left;
+    border-radius: 10px;
+    letter-spacing: 0.3px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s ease;
+  }
+  
+  /* Add icon to menu items */
+  .portfolio-nav-links li a::before {
+    content: '›';
+    display: inline-block;
+    margin-right: 8px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
+  }
+  
+  .portfolio-nav-links li a:hover::before,
+  .portfolio-nav-links a.portfolio-active::before {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .portfolio-nav-links li a:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.08);
+    transform: none;
+    padding-left: 24px;
+  }
+  
+  .portfolio-nav-links a.portfolio-active {
+    background-color: rgba(var(--primary-color-rgb), 0.12);
+    color: var(--primary-color);
+    font-weight: 600;
+    padding-left: 24px;
+    box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.15);
+  }
+  
+  [data-theme="dark"] .portfolio-nav-links li a:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.15);
+  }
+  
+  [data-theme="dark"] .portfolio-nav-links a.portfolio-active {
+    background-color: rgba(var(--primary-color-rgb), 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Add a decorative element to bottom of menu */
+  .portfolio-nav-links::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background-color: rgba(var(--primary-color-rgb), 0.3);
+    border-radius: 2px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
   }
   
   .portfolio-nav-links li a {
@@ -296,6 +593,140 @@
     background-color: rgba(var(--primary-color-rgb), 0.1);
     border-radius: 8px;
   }
+
+  /* Style the menu button for mobile */
+  .portfolio-menu-button {
+    display: flex !important;
+    order: 3; /* Swap to right side */
+    margin-right: 10px;
+  }
+  
+  /* Hide the old hamburger button */
+  .portfolio-hamburger {
+    display: none !important;
+  }
+
+  .portfolio-nav-links {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Changed from flex-start to center for vertical centering */
+    padding: 0; /* Remove padding to let centering work properly */
+    transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    overflow-y: auto;
+    will-change: transform;
+    transform: translateX(100%);
+    background-color: #ffffff;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+  }
+  
+  /* Fix the header decoration to prevent overlap with menu items */
+  .portfolio-nav-links::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 80px; /* Reduced height */
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1) 0%, rgba(var(--primary-color-rgb), 0.05) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Lower z-index so it stays behind menu items */
+    border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.1);
+  }
+  
+  /* Add a subtle pattern overlay with proper z-index */
+  .portfolio-nav-links::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill='%23000000' fill-opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  /* Add a proper container for menu items with proper spacing */
+  .portfolio-nav-links ul {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Add proper spacing container for menu items */
+  .portfolio-nav-links-wrapper {
+    width: 100%;
+    padding: 100px 0 60px; /* Add more padding at the top */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5; /* Ensure it's above the decorative elements */
+  }
+  
+  /* Fix the menu items styling */
+  .portfolio-nav-links li {
+    margin: 12px 0; /* Slightly bigger gaps between items */
+    width: 85%;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border-radius: 10px;
+    position: relative;
+    z-index: 2; /* Ensure menu items are above decorations */
+  }
+  
+  .portfolio-nav-links li a {
+    display: block;
+    font-size: 1.1rem;
+    padding: 14px 20px;
+    width: 100%;
+    text-align: left;
+    border-radius: 10px;
+    letter-spacing: 0.3px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    transition: all 0.3s ease;
+    background-color: transparent; /* Ensure transparent background by default */
+  }
+  
+  /* Change the decorative element at bottom to not use ::after which conflicts */
+  .portfolio-nav-links .menu-footer-decoration {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background-color: rgba(var(--primary-color-rgb), 0.3);
+    border-radius: 2px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  /* Remove the conflicting ::after that was used for the bottom decoration */
+  .portfolio-nav-links::after {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill='%23000000' fill-opacity='0.03'/%3E%3C/svg%3E");
+    bottom: auto;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    transform: none;
+    background-color: transparent;
+    z-index: -1;
+  }
 }
 
 /* Add delay for nav links to create staggered animation */
@@ -306,8 +737,13 @@
 .portfolio-nav-links li:nth-child(5) { --i: 5; }
 
 @media screen and (max-width: 575px) {
-  .portfolio-burger i {
-    font-size: 20px;
+  .portfolio-hamburger {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .portfolio-hamburger-line {
+    width: 20px;
   }
   
   .portfolio-logo {
@@ -322,5 +758,36 @@
   .portfolio-nav-links li a {
     font-size: 1.1rem;
     padding: 10px 15px;
+  }
+  
+  /* Enhanced mobile menu animation */
+  @keyframes portfolioNavLinkFade {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .portfolio-menu-button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .menu-line {
+    width: 18px;
+  }
+  
+  .portfolio-menu-button.portfolio-active .menu-line:nth-child(1),
+  .portfolio-menu-button.portfolio-active .menu-line:nth-child(3) {
+    width: 18px;
+  }
+  
+  /* Make menu slightly wider on very small screens */
+  .portfolio-nav-links {
+    width: 65%;
   }
 }
