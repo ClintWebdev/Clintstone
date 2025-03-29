@@ -28,7 +28,7 @@
     
 </head>
 <body>
-    <div id="navBackdrop" class="nav-backdrop"></div>
+    <!-- Remove duplicate navBackdrop - now located in header.html -->
     
     <!-- Include header component -->
     <div id="header-component"></div>
@@ -113,6 +113,17 @@
                     .then(response => response.text())
                     .then(data => {
                         document.getElementById(id).innerHTML = data;
+                        
+                        // Initialize mobile menu if header is loaded
+                        if (id === 'header-component') {
+                            initializeMobileMenu();
+                        }
+                        
+                        // Initialize T-shirt gallery if projects component is loaded
+                        if (id === 'projects-component') {
+                            setTimeout(initializeTshirtGallery, 100); // Add a small delay to ensure DOM is ready
+                        }
+                        
                         // Dispatch event when component is loaded
                         document.dispatchEvent(new CustomEvent('componentLoaded', {
                             detail: { id: id }
@@ -120,6 +131,273 @@
                     })
                     .catch(error => console.error('Error loading component:', error));
             }
+            
+            // Initialize T-shirt Gallery
+            function initializeTshirtGallery() {
+                const modal = document.getElementById('designGalleryModal');
+                const viewBtn = document.getElementById('viewTshirtDesigns');
+                const closeBtn = document.querySelector('.gallery-close');
+                const slides = document.querySelectorAll('.gallery-slide');
+                const prevBtn = document.querySelector('.gallery-prev');
+                const nextBtn = document.querySelector('.gallery-next');
+                const dots = document.querySelectorAll('.gallery-dot');
+                const currentSlideElement = document.getElementById('currentSlide');
+                const totalSlidesElement = document.getElementById('totalSlides');
+                const thumbnails = document.querySelectorAll('.thumbnail');
+                
+                // Only set image sources if they aren't already set
+                const tshirtDesign1 = document.getElementById('tshirtDesign1');
+                const tshirtDesign2 = document.getElementById('tshirtDesign2');
+                const tshirtDesign3 = document.getElementById('tshirtDesign3');
+                const tshirtDesign4 = document.getElementById('tshirtDesign4');
+                
+                // Check if image src is empty before setting it
+                if (tshirtDesign2 && (!tshirtDesign2.src || tshirtDesign2.src.endsWith('/'))) {
+                    tshirtDesign2.src = 'assets/images/tshirt-design-2.jpg';
+                }
+                if (tshirtDesign3 && (!tshirtDesign3.src || tshirtDesign3.src.endsWith('/'))) {
+                    tshirtDesign3.src = 'assets/images/tshirt-design-3.jpg';
+                }
+                if (tshirtDesign4 && (!tshirtDesign4.src || tshirtDesign4.src.endsWith('/'))) {
+                    tshirtDesign4.src = 'assets/images/tshirt-design-4.jpg';
+                }
+                
+                let currentSlide = 0;
+                
+                // Update total slides count
+                if (totalSlidesElement && slides.length > 0) {
+                    totalSlidesElement.textContent = slides.length;
+                }
+                
+                // Function to show a specific slide
+                function showSlide(n) {
+                    if (!slides || slides.length === 0) {
+                        console.error('No gallery slides found');
+                        return;
+                    }
+                    
+                    currentSlide = n;
+                    
+                    if (currentSlide >= slides.length) currentSlide = 0;
+                    if (currentSlide < 0) currentSlide = slides.length - 1;
+                    
+                    // Hide all slides
+                    slides.forEach(slide => slide.style.display = 'none');
+                    
+                    // Remove active class from all dots
+                    if (dots && dots.length > 0) {
+                        dots.forEach(dot => dot.classList.remove('active'));
+                        dots[currentSlide].classList.add('active');
+                    }
+                    
+                    // Show current slide
+                    slides[currentSlide].style.display = 'block';
+                    
+                    // Update counter
+                    if (currentSlideElement) {
+                        currentSlideElement.textContent = currentSlide + 1;
+                    }
+                    
+                    // Update thumbnail active state
+                    if (thumbnails && thumbnails.length > 0) {
+                        thumbnails.forEach((thumb, index) => {
+                            thumb.classList.toggle('active', index === currentSlide);
+                        });
+                    }
+                }
+                
+                // Show gallery modal
+                if (viewBtn) {
+                    viewBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (modal) {
+                            modal.style.display = 'flex';
+                            
+                            // Add a tiny delay before adding active class for animation
+                            setTimeout(() => {
+                                modal.classList.add('active');
+                            }, 10);
+                            
+                            showSlide(0);
+                        } else {
+                            console.error('Gallery modal not found');
+                        }
+                    });
+                }
+                
+                // Close gallery modal
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function() {
+                        if (modal) {
+                            modal.classList.remove('active');
+                            
+                            // Add a delay before hiding the modal to allow animation
+                            setTimeout(() => {
+                                modal.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                }
+                
+                // Close gallery when clicking outside the content
+                window.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        
+                        // Add a delay before hiding the modal to allow animation
+                        setTimeout(() => {
+                            modal.style.display = 'none';
+                        }, 300);
+                    }
+                });
+                
+                // Previous and next buttons
+                if (prevBtn) prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+                if (nextBtn) nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+                
+                // Dot navigation
+                if (dots && dots.length > 0) {
+                    dots.forEach(dot => {
+                        dot.addEventListener('click', function() {
+                            const slideIndex = parseInt(this.getAttribute('data-index'));
+                            showSlide(slideIndex);
+                        });
+                    });
+                }
+                
+                // Thumbnail navigation
+                if (thumbnails && thumbnails.length > 0) {
+                    thumbnails.forEach(thumbnail => {
+                        thumbnail.addEventListener('click', function() {
+                            const slideIndex = parseInt(this.getAttribute('data-index'));
+                            showSlide(slideIndex);
+                        });
+                    });
+                }
+                
+                // Keyboard navigation
+                document.addEventListener('keydown', function(e) {
+                    if (modal && modal.style.display === 'flex') {
+                        if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+                        if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
+                        if (e.key === 'Escape') {
+                            modal.classList.remove('active');
+                            setTimeout(() => {
+                                modal.style.display = 'none';
+                            }, 300);
+                        }
+                    }
+                });
+            }
+            
+            // Initialize mobile menu functionality
+            function initializeMobileMenu() {
+                const menuButton = document.querySelector('.portfolio-menu-button');
+                const nav = document.querySelector('.portfolio-nav-links');
+                const navLinks = document.querySelectorAll('.portfolio-nav-links li');
+                const backdrop = document.getElementById('navBackdrop');
+                
+                if (!menuButton || !nav || !backdrop) {
+                    console.error('Mobile menu elements not found');
+                    return;
+                }
+                
+                function toggleNav() {
+                    nav.classList.toggle('portfolio-nav-active');
+                    backdrop.classList.toggle('portfolio-active');
+                    menuButton.classList.toggle('portfolio-active');
+                    
+                    if (nav.classList.contains('portfolio-nav-active')) {
+                        document.body.style.overflow = 'hidden';
+                        
+                        // Improved animation handling
+                        navLinks.forEach((link, index) => {
+                            link.style.transitionDelay = `${index * 0.07 + 0.2}s`;
+                            link.style.opacity = "1";
+                            link.style.transform = "translateX(0)";
+                        });
+                    } else {
+                        document.body.style.overflow = '';
+                        
+                        // Reset animations when menu closes
+                        navLinks.forEach(link => {
+                            link.style.transitionDelay = "0s";
+                        });
+                        
+                        // Small delay to allow close animation to complete
+                        setTimeout(() => {
+                            if (!nav.classList.contains('portfolio-nav-active')) {
+                                navLinks.forEach(link => {
+                                    link.style.opacity = "";
+                                    link.style.transform = "";
+                                });
+                            }
+                        }, 300);
+                    }
+                }
+                
+                menuButton.addEventListener('click', toggleNav);
+                backdrop.addEventListener('click', toggleNav);
+                
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (nav.classList.contains('portfolio-nav-active')) {
+                            toggleNav();
+                        }
+                    });
+                });
+                
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && nav.classList.contains('portfolio-nav-active')) {
+                        toggleNav();
+                    }
+                });
+                
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 767 && nav.classList.contains('portfolio-nav-active')) {
+                        toggleNav();
+                    }
+                });
+                
+                // Highlight active menu item based on current section
+                const currentSection = getCurrentSection();
+                highlightActiveMenuItem(currentSection);
+            }
+            
+            // Function to get current visible section
+            function getCurrentSection() {
+                const sections = document.querySelectorAll('section[id]');
+                let current = 'home';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                return current;
+            }
+            
+            // Function to highlight active menu item
+            function highlightActiveMenuItem(sectionId) {
+                const menuItems = document.querySelectorAll('.portfolio-nav-links a');
+                menuItems.forEach(item => {
+                    item.classList.remove('portfolio-active');
+                    if (item.getAttribute('data-section') === sectionId) {
+                        item.classList.add('portfolio-active');
+                    }
+                });
+            }
+            
+            // Highlight active menu item on scroll
+            window.addEventListener('scroll', () => {
+                const currentSection = getCurrentSection();
+                highlightActiveMenuItem(currentSection);
+            });
+            
+            // Initial highlight
+            highlightActiveMenuItem(getCurrentSection());
             
             // Close thank you overlay
             document.body.addEventListener('click', function(event) {
