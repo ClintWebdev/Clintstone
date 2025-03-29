@@ -121,6 +121,163 @@
   color: white;
 }
 
+/* T-Shirt Design Gallery Modal */
+.gallery-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-content {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  max-height: 90vh;
+  background-color: transparent;
+}
+
+.gallery-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1010;
+}
+
+.gallery-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-slide {
+  display: none;
+  width: 100%;
+  text-align: center;
+}
+
+.gallery-slide img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.gallery-prev, .gallery-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-prev:hover, .gallery-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.gallery-prev {
+  left: 20px;
+}
+
+.gallery-next {
+  right: 20px;
+}
+
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.gallery-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #bbb;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.gallery-dot.active {
+  background-color: var(--primary-color);
+}
+
+/* Project thumbnails for T-shirt designs */
+.project-thumbnails {
+  display: flex;
+  gap: 8px;
+  margin-top: -5px;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  position: relative;
+  z-index: 2;
+}
+
+.project-thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.project-thumbnail:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-color);
+}
+
+.project-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark mode styles for thumbnails */
+[data-theme="dark"] .project-thumbnails {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive styles for thumbnails */
+@media screen and (max-width: 767px) {
+  .project-thumbnails {
+    padding: 6px;
+    gap: 6px;
+  }
+  .project-thumbnail {
+    width: 36px;
+    height: 36px;
+  }
+}
+
 /* Responsive styles */
 @media screen and (max-width: 991px) {
   .projects-grid {
@@ -140,6 +297,24 @@
   
   .filter-btn {
     margin: 5px;
+  }
+  
+  .gallery-content {
+    width: 95%;
+  }
+  
+  .gallery-prev, .gallery-next {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .gallery-prev {
+    left: 5px;
+  }
+  
+  .gallery-next {
+    right: 5px;
   }
 }
 
