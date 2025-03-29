@@ -3,21 +3,24 @@
     <nav class="portfolio-navbar">
         <div class="portfolio-logo">Clintstone</div>
         <ul class="portfolio-nav-links">
-            <!-- Removed indicator element -->
             <li><a href="#home" data-section="home">Home</a></li>
             <li><a href="#about" data-section="about">About</a></li>
             <li><a href="#skills" data-section="skills">Skills</a></li>
             <li><a href="#projects" data-section="projects">Projects</a></li>
             <li><a href="#contact" data-section="contact">Contact</a></li>
+            <!-- Add a separate element for the bottom decoration - only visible on mobile -->
+            <div class="menu-footer-decoration"></div>
         </ul>
         <button id="theme-toggle" class="portfolio-theme-toggle" aria-label="Toggle dark mode">
             <i class="fas fa-moon portfolio-icon-moon portfolio-icon-visible"></i>
             <i class="fas fa-sun portfolio-icon-sun portfolio-icon-hidden"></i>
         </button>
-        <div class="portfolio-burger">
-            <i class="fas fa-bars portfolio-menu-icon"></i>
-            <i class="fas fa-times portfolio-close-icon"></i>
-        </div>
+        <!-- Custom minimal menu button -->
+        <button class="portfolio-menu-button" aria-label="Menu">
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+        </button>
     </nav>
 </header>
 
@@ -27,7 +30,7 @@
 <script>
     // Mobile Navigation Drawer
     document.addEventListener('DOMContentLoaded', function() {
-        const burger = document.querySelector('.portfolio-burger');
+        const menuButton = document.querySelector('.portfolio-menu-button');
         const nav = document.querySelector('.portfolio-nav-links');
         const navLinks = document.querySelectorAll('.portfolio-nav-links li');
         const backdrop = document.getElementById('navBackdrop');
@@ -36,12 +39,40 @@
         function toggleNav() {
             nav.classList.toggle('portfolio-nav-active');
             backdrop.classList.toggle('portfolio-active');
-            burger.classList.toggle('portfolio-toggle');
+            menuButton.classList.toggle('portfolio-active');
+            
+            // Add explicit light/dark class to ensure styling
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                nav.classList.add('dark-mode-nav');
+                nav.classList.remove('light-mode-nav');
+            } else {
+                nav.classList.add('light-mode-nav');
+                nav.classList.remove('dark-mode-nav');
+            }
+            
+            // Track active section for menu
+            const currentSection = document.querySelector('.section-active')?.id || 'home';
+            const activeLink = nav.querySelector(`a[data-section="${currentSection}"]`);
+            
+            if (activeLink) {
+                nav.querySelectorAll('a').forEach(link => link.classList.remove('portfolio-active'));
+                activeLink.classList.add('portfolio-active');
+            }
             
             if (nav.classList.contains('portfolio-nav-active')) {
                 document.body.style.overflow = 'hidden';
+                
+                // Reset animations then apply with delay
+                navLinks.forEach((link, index) => {
+                    link.style.transitionDelay = `${index * 0.07 + 0.2}s`;
+                });
             } else {
                 document.body.style.overflow = '';
+                
+                // No delay when closing
+                navLinks.forEach(link => {
+                    link.style.transitionDelay = "0s";
+                });
             }
             
             navLinks.forEach((link, index) => {
@@ -53,7 +84,7 @@
             });
         }
         
-        burger.addEventListener('click', toggleNav);
+        menuButton.addEventListener('click', toggleNav);
         backdrop.addEventListener('click', toggleNav);
         
         navLinks.forEach(link => {
